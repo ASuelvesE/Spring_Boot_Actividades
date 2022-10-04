@@ -1,0 +1,15 @@
+nav{
+    margin: 30px;
+}
+.enlaces{
+    display:flex;
+}
+.enlaces * {
+    margin: 10px;
+}
+.buscador{
+    display:flex;
+}
+.buscador * {
+    margin: 10px;
+}

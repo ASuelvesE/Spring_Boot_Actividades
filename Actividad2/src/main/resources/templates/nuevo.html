@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="fragments/nav"></div>
+    <form action="/nuevo" method="post">
+        <label>Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" value="" ><br>
+        <label>Marca:</label>
+        <input type="text" id="marca" name="marca" value="" ><br>
+        <label>Modelo:</label>
+        <input type="text" id="modelo" name="modelo" value="" ><br>
+        <label>Km:</label>
+        <input type="number" id="km" name="km" value=""><br>
+
+        <input type="submit" value="Añadir">
+    </form>
+</body>
+</html>
