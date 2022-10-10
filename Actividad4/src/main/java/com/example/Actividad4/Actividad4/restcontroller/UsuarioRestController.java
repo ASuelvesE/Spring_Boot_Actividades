@@ -21,6 +21,7 @@ public class UsuarioRestController {
 
     @GetMapping("/usuarios")
     List<Usuario> getAll(){
+        System.out.println(iCrudService.findAll(null).size());
         return iCrudService.findAll(null);
     }
     @PostMapping(path = "/usuarios", consumes = {MediaType.APPLICATION_JSON_VALUE})

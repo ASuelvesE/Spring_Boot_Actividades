@@ -20,11 +20,11 @@ public class PeliculaServices implements ICrudService<Pelicula> {
 
     @Override
     public List<Pelicula> save(Pelicula pelicula,Long id) {
-        for(Usuario u : Dao.getInstance().getListaUsuarios()){
-            if(u.getId() == id){
-                u.getPeliculas().add(pelicula);
+        for(int i = 0; i<Dao.getInstance().getListaUsuarios().size();i++){
+            if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){
+                Dao.getInstance().getListaUsuarios().get(i).getPeliculas().add(pelicula);
                 Dao.getInstance().getListaPeliculas().add(pelicula);
-                return u.getPeliculas();
+                return Dao.getInstance().getListaUsuarios().get(i).getPeliculas();
             }
         }
         return null;
@@ -37,33 +37,41 @@ public class PeliculaServices implements ICrudService<Pelicula> {
 
     @Override
     public List<Pelicula> updateList(Long id, Pelicula pelicula) {
-        for(Usuario u : Dao.getInstance().getListaUsuarios()){
-            if(u.getId() == id){
-                for(int i=0; i<u.getPeliculas().size();i++){
-                    if(u.getPeliculas().get(i).getNombre().equalsIgnoreCase(pelicula.getNombre())){
-                        u.getPeliculas().get(i).setDuracion(pelicula.getDuracion());
-                        return u.getPeliculas();
+        int posicion = -1;
+        for(int i = 0; i<Dao.getInstance().getListaUsuarios().size(); i++){
+            if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){
+                posicion = i;
+                for(int k=0; k<Dao.getInstance().getListaUsuarios().get(i).getPeliculas().size();k++){
+                    if(Dao.getInstance().getListaUsuarios().get(i).getPeliculas().get(k).getNombre().equalsIgnoreCase(pelicula.getNombre())){
+                        Dao.getInstance().getListaUsuarios().get(i).getPeliculas().get(k).setDuracion(pelicula.getDuracion());
+                        return Dao.getInstance().getListaUsuarios().get(i).getPeliculas();
                     }
                 }
             }
         }
-        return null;
+        return Dao.getInstance().getListaUsuarios().get(posicion).getPeliculas();
     }
 
     @Override
     public List<Pelicula> delete(Long id, String name) {
-        for(Usuario u : Dao.getInstance().getListaUsuarios()){
-            if(u.getId() == id){
-                Iterator it = u.getPeliculas().iterator();
+        int posicion = -1;
+        for(int i = 0; i< Dao.getInstance().getListaUsuarios().size();i++){
+
+            if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){
+                posicion = i;
+                Iterator it = Dao.getInstance().getListaUsuarios().get(i).getPeliculas().iterator();
+
                 while(it.hasNext()){
                     Pelicula p = (Pelicula) it.next();
                     if(p.getNombre().equalsIgnoreCase(name)){
                         it.remove();
-                        return u.getPeliculas();
+                        return Dao.getInstance().getListaUsuarios().get(i).getPeliculas();
                     }
                 }
+
             }
+
         }
-        return null;
+        return Dao.getInstance().getListaUsuarios().get(posicion).getPeliculas();
     }
 }

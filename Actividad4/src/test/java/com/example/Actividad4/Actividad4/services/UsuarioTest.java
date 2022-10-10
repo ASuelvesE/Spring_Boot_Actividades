@@ -1,5 +1,6 @@
 package com.example.Actividad4.Actividad4.services;
 
+import com.example.Actividad4.Actividad4.dao.Dao;
 import com.example.Actividad4.Actividad4.model.Pelicula;
 import com.example.Actividad4.Actividad4.model.Usuario;
 import org.junit.Test;
@@ -34,7 +35,15 @@ public class UsuarioTest {
         Pelicula pelicula = new Pelicula("NombreActualizado","2:35");
         Usuario usuario = new Usuario(null,null);
         usuario.add(pelicula);
-        Usuario u = iCrudService.update(1L,usuario);
+        iCrudService.update(1L,usuario);
         assertEquals("NombreActualizado",iCrudService.findAll(null).get(0).getPeliculas().get(0).getNombre());
+    }
+
+    @Test
+    public void deleteUser(){
+        Usuario usuario = new Usuario(2L,"Prueba");
+        iCrudService.save(usuario,null);
+        iCrudService.delete(2L,null);
+        assertEquals(1,iCrudService.findAll(null).size());
     }
 }
