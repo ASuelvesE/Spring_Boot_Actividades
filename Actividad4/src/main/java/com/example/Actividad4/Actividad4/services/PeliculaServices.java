@@ -37,10 +37,8 @@ public class PeliculaServices implements ICrudService<Pelicula> {
 
     @Override
     public List<Pelicula> updateList(Long id, Pelicula pelicula) {
-        int posicion = -1;
         for(int i = 0; i<Dao.getInstance().getListaUsuarios().size(); i++){
-            if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){
-                posicion = i;
+            if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){;
                 for(int k=0; k<Dao.getInstance().getListaUsuarios().get(i).getPeliculas().size();k++){
                     if(Dao.getInstance().getListaUsuarios().get(i).getPeliculas().get(k).getNombre().equalsIgnoreCase(pelicula.getNombre())){
                         Dao.getInstance().getListaUsuarios().get(i).getPeliculas().get(k).setDuracion(pelicula.getDuracion());
@@ -49,16 +47,14 @@ public class PeliculaServices implements ICrudService<Pelicula> {
                 }
             }
         }
-        return Dao.getInstance().getListaUsuarios().get(posicion).getPeliculas();
+        return null;
     }
 
     @Override
     public List<Pelicula> delete(Long id, String name) {
-        int posicion = -1;
         for(int i = 0; i< Dao.getInstance().getListaUsuarios().size();i++){
 
             if(Dao.getInstance().getListaUsuarios().get(i).getId() == id){
-                posicion = i;
                 Iterator it = Dao.getInstance().getListaUsuarios().get(i).getPeliculas().iterator();
 
                 while(it.hasNext()){
@@ -68,10 +64,8 @@ public class PeliculaServices implements ICrudService<Pelicula> {
                         return Dao.getInstance().getListaUsuarios().get(i).getPeliculas();
                     }
                 }
-
             }
-
         }
-        return Dao.getInstance().getListaUsuarios().get(posicion).getPeliculas();
+        return null;
     }
 }
