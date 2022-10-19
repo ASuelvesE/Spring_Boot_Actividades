@@ -5,6 +5,7 @@ import com.example.Actividad5.Actividad5.entities.Entrenamiento;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class JugadoresServicesRAM implements IJugadoresServices<Jugador>{
@@ -40,6 +41,16 @@ public class JugadoresServicesRAM implements IJugadoresServices<Jugador>{
 
     @Override
     public Jugador update(Long id,Jugador jugador) {
+        Iterator it = Ram.getInstance().getJugadores().iterator();
+        while(it.hasNext()){
+            Jugador j = (Jugador) it.next();
+            if(j.getId() == id){
+                it.remove();
+                jugador.setId(id);
+                Ram.getInstance().getJugadores().add(jugador);
+                return jugador;
+            }
+        }
         return null;
     }
 }

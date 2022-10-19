@@ -1,6 +1,7 @@
 package com.example.Actividad5.Actividad5.rest;
 
 import com.example.Actividad5.Actividad5.conexion.Ram;
+import com.example.Actividad5.Actividad5.constants.Const;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 import com.example.Actividad5.Actividad5.services.IJugadoresServices;
 import com.example.Actividad5.Actividad5.services.JugadoresServicesRAM;
@@ -18,17 +19,17 @@ public class JugadoresController {
         services = new JugadoresServicesRAM();
     }
 
-    @GetMapping("/jugadores/{id}")
+    @GetMapping(Const.API + "/jugadores/{id}")
     List<Jugador> getById(@PathVariable Long id){
         if(id == null)
             return services.getAll();
         return services.getById(id);
     }
-    @PostMapping("/jugadores")
+    @PostMapping(Const.API + "/jugadores")
     Jugador save(Jugador jugador){
         return services.save(jugador);
     }
-    @PutMapping("/jugadores/{id}")
+    @PutMapping(Const.API + "/jugadores/{id}")
     Jugador update(@PathVariable Long id,@RequestBody Jugador jugador){
         return services.update(id,jugador);
     }

@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Ejercicio {
 
-    private final Long id;
+    private static Long contador = 1L;
+    private Long id;
     private final String titulo;
     private String descripcion;
     private List<String> etiquetas;
@@ -15,8 +16,8 @@ public class Ejercicio {
     private List<String> materiales;
     private HashMap<String,String> recursosMultimedia;
 
-    public Ejercicio(Long id, String titulo, String descripcion, String duracion) {
-        this.id = id;
+    public Ejercicio(String titulo, String descripcion, String duracion) {
+        this.id = contador;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -24,10 +25,11 @@ public class Ejercicio {
         this.dureza = new HashMap<>();
         this.materiales = new ArrayList<>();
         this.recursosMultimedia = new HashMap<>();
+        contador++;
     }
 
-    public Ejercicio(Long id, String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String, Integer> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
-        this.id = id;
+    public Ejercicio(String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String, Integer> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
+        this.id = contador;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.etiquetas = etiquetas;
@@ -35,11 +37,13 @@ public class Ejercicio {
         this.dureza = dureza;
         this.materiales = materiales;
         this.recursosMultimedia = recursosMultimedia;
+        contador++;
     }
 
-    public Ejercicio(Long id, String titulo) {
-        this.id = id;
+    public Ejercicio(String titulo) {
+        this.id = contador;
         this.titulo = titulo;
+        contador++;
     }
 
     public Long getId() {
@@ -102,5 +106,12 @@ public class Ejercicio {
                 ", materiales=" + materiales +
                 ", recursosMultimedia=" + recursosMultimedia +
                 '}';
+    }
+    public static void reseteaContador(){
+        contador = 1L;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

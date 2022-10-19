@@ -88,4 +88,7 @@ public class Entrenamiento {
                 ", asistentes=" + asistentes +
                 '}';
     }
+    public static void reseteaContador(){
+        contador = 1L;
+    }
 }

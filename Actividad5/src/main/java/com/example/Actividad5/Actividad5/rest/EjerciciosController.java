@@ -1,5 +1,6 @@
 package com.example.Actividad5.Actividad5.rest;
 
+import com.example.Actividad5.Actividad5.constants.Const;
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
 import com.example.Actividad5.Actividad5.services.EjerciciosServicesRAM;
 import com.example.Actividad5.Actividad5.services.IEjerciciosServices;
@@ -19,15 +20,15 @@ public class EjerciciosController {
         this.services = new EjerciciosServicesRAM();
     }
 
-    @GetMapping("/ejercicios")
+    @GetMapping(Const.API + "/ejercicios")
     List<Ejercicio> getAll(){
         return services.getAll();
     }
-    @GetMapping("/ejercicios/{id}")
+    @GetMapping(Const.API + "/ejercicios/{id}")
     Ejercicio getById(@PathVariable Long id){
         return services.getById(id);
     }
-    @PostMapping("/ejercicios")
+    @PostMapping(Const.API + "/ejercicios")
     Ejercicio save(Ejercicio e){
         return services.save(e);
     }

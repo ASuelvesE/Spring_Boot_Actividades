@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Jugador {
 
+    private static Long contador = 1L;
     private Long id;
     private String dni;
     private String nombre;
@@ -13,8 +14,8 @@ public class Jugador {
     private Velocidad velocidad;
     private Recuperacion recuperacion;
 
-    public Jugador(Long id,String dni, String nombre, String apellidos, Date fechaNacimiento, Resistencia resistencia, Velocidad velocidad, Recuperacion recuperacion) {
-        this.id = id;
+    public Jugador(String dni, String nombre, String apellidos, Date fechaNacimiento, Resistencia resistencia, Velocidad velocidad, Recuperacion recuperacion) {
+        this.id = contador;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -22,18 +23,23 @@ public class Jugador {
         this.resistencia = resistencia;
         this.velocidad = velocidad;
         this.recuperacion = recuperacion;
+        contador++;
     }
 
-    public Jugador(Long id,String dni, String nombre, String apellidos) {
-        this.id = id;
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-    }
     public Jugador(String dni, String nombre, String apellidos) {
+        this.id = contador;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        contador++;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDni() {
@@ -66,8 +72,9 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return "Entrenamiento{" +
-                "dni='" + dni + '\'' +
+        return "Jugador{" +
+                "id=" + id +
+                ", dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
@@ -75,5 +82,8 @@ public class Jugador {
                 ", velocidad=" + velocidad +
                 ", recuperacion=" + recuperacion +
                 '}';
+    }
+    public static void reseteaContador(){
+        contador = 1L;
     }
 }
