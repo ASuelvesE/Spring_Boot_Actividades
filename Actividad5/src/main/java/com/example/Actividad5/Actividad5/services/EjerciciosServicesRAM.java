@@ -1,4 +1,34 @@
 package com.example.Actividad5.Actividad5.services;
 
-public class EjerciciosServicesRAM {
+import com.example.Actividad5.Actividad5.conexion.Ram;
+import com.example.Actividad5.Actividad5.entities.Ejercicio;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio>{
+    @Override
+    public List getAll() {
+        List<Ejercicio> lista = new ArrayList<>();
+        for(Ejercicio e : Ram.getInstance().getEjercicios()){
+            Ejercicio nuevo = new Ejercicio(e.getId(),e.getTitulo());
+            lista.add(nuevo);
+        }
+        return lista;
+    }
+
+    @Override
+    public Ejercicio getById(Long id) {
+        for(Ejercicio e : Ram.getInstance().getEjercicios()){
+            if(e.getId() == id)
+                return e;
+        }
+        return null;
+    }
+
+    @Override
+    public Ejercicio save(Ejercicio e) {
+        Ram.getInstance().getEjercicios().add(e);
+        return e;
+    }
 }

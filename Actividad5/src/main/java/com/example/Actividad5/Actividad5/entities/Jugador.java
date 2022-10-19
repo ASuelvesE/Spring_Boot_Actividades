@@ -3,15 +3,18 @@ package com.example.Actividad5.Actividad5.entities;
 import java.sql.Date;
 
 public class Jugador {
-    private final String dni;
-    private final String nombre;
-    private final String apellidos;
-    private final Date fechaNacimiento;
-    private final Resistencia resistencia;
-    private final Velocidad velocidad;
-    private  final Recuperacion recuperacion;
 
-    public Jugador(String dni, String nombre, String apellidos, Date fechaNacimiento, Resistencia resistencia, Velocidad velocidad, Recuperacion recuperacion) {
+    private Long id;
+    private String dni;
+    private String nombre;
+    private String apellidos;
+    private Date fechaNacimiento;
+    private Resistencia resistencia;
+    private Velocidad velocidad;
+    private Recuperacion recuperacion;
+
+    public Jugador(Long id,String dni, String nombre, String apellidos, Date fechaNacimiento, Resistencia resistencia, Velocidad velocidad, Recuperacion recuperacion) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -19,6 +22,18 @@ public class Jugador {
         this.resistencia = resistencia;
         this.velocidad = velocidad;
         this.recuperacion = recuperacion;
+    }
+
+    public Jugador(Long id,String dni, String nombre, String apellidos) {
+        this.id = id;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+    public Jugador(String dni, String nombre, String apellidos) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
     }
 
     public String getDni() {

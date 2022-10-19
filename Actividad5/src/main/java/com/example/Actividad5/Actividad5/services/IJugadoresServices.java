@@ -8,6 +8,8 @@ public interface IJugadoresServices<Jugador> {
 
     public List<Jugador> getAll();
     public List<Jugador> getById(Long id);
-    public Jugador save();
-    public Jugador update(Long id);
+
+    public Jugador save(Jugador jugador);
+
+    public Jugador update(Long id,Jugador jugador);
 }

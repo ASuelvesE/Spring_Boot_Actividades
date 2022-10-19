@@ -4,10 +4,7 @@ import com.example.Actividad5.Actividad5.conexion.Ram;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 import com.example.Actividad5.Actividad5.services.IJugadoresServices;
 import com.example.Actividad5.Actividad5.services.JugadoresServicesRAM;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,19 +12,24 @@ import java.util.List;
 @RequestMapping("/api")
 public class JugadoresController {
 
-    IJugadoresServices services;
+    IJugadoresServices<Jugador> services;
 
     public JugadoresController(){
         services = new JugadoresServicesRAM();
     }
 
-    @GetMapping("/jugadores")
-    List<Jugador> getAll(){
-        return services.getAll();
-    }
     @GetMapping("/jugadores/{id}")
     List<Jugador> getById(@PathVariable Long id){
+        if(id == null)
+            return services.getAll();
         return services.getById(id);
     }
-
+    @PostMapping("/jugadores")
+    Jugador save(Jugador jugador){
+        return services.save(jugador);
+    }
+    @PutMapping("/jugadores/{id}")
+    Jugador update(@PathVariable Long id,@RequestBody Jugador jugador){
+        return services.update(id,jugador);
+    }
 }

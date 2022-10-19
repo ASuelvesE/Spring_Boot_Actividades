@@ -8,9 +8,9 @@ public class Ejercicio {
 
     private final Long id;
     private final String titulo;
-    private final String descripcion;
+    private String descripcion;
     private List<String> etiquetas;
-    private final String duracion;
+    private String duracion;
     private HashMap<String,Integer> dureza;
     private List<String> materiales;
     private HashMap<String,String> recursosMultimedia;
@@ -35,6 +35,11 @@ public class Ejercicio {
         this.dureza = dureza;
         this.materiales = materiales;
         this.recursosMultimedia = recursosMultimedia;
+    }
+
+    public Ejercicio(Long id, String titulo) {
+        this.id = id;
+        this.titulo = titulo;
     }
 
     public Long getId() {
