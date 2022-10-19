@@ -8,11 +8,11 @@
 		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example.Actividad4</groupId>
-	<artifactId>Actividad4</artifactId>
+	<groupId>com.example.Actividad5</groupId>
+	<artifactId>Actividad5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Actividad4</name>
-	<description>API REST peliculas/usuarios</description>
+	<name>Actividad5</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -27,21 +27,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.4</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 
 	<build>
