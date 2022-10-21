@@ -1,14 +1,15 @@
-package com.example.Actividad5.Actividad5.services;
+package com.example.Actividad5.Actividad5.services.ram;
 
 import com.example.Actividad5.Actividad5.conexion.Ram;
 import com.example.Actividad5.Actividad5.entities.Entrenamiento;
 import com.example.Actividad5.Actividad5.entities.Jugador;
+import com.example.Actividad5.Actividad5.services.IJugadoresServices;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class JugadoresServicesRAM implements IJugadoresServices<Jugador>{
+public class JugadoresServicesRAM implements IJugadoresServices<Jugador> {
     @Override
     public List<Jugador> getAll() {
         List<Jugador> jugadores = Ram.getInstance().getJugadores();
@@ -22,10 +23,12 @@ public class JugadoresServicesRAM implements IJugadoresServices<Jugador>{
 
     @Override
     public List<Jugador> getById(Long id) {
-        List<Entrenamiento> entrenamientos = Ram.getInstance().getEntrenamientos();
-        for(Entrenamiento e : entrenamientos){
-            if(e.getId() == id){
-                return e.getAsistentes();
+        List<Jugador> salida = new ArrayList<>();
+        List<Jugador> jugadores = Ram.getInstance().getJugadores();
+        for(Jugador j : jugadores){
+            if(j.getId() == id){
+                salida.add(j);
+                return salida;
             }
         }
         return null;

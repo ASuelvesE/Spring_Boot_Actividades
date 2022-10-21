@@ -1,12 +1,13 @@
-package com.example.Actividad5.Actividad5.services;
+package com.example.Actividad5.Actividad5.services.ram;
 
 import com.example.Actividad5.Actividad5.conexion.Ram;
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
+import com.example.Actividad5.Actividad5.services.IEjerciciosServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio>{
+public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio> {
     @Override
     public List getAll() {
         List<Ejercicio> lista = new ArrayList<>();

@@ -1,10 +1,9 @@
 package com.example.Actividad5.Actividad5.rest;
 
-import com.example.Actividad5.Actividad5.conexion.Ram;
 import com.example.Actividad5.Actividad5.constants.Const;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 import com.example.Actividad5.Actividad5.services.IJugadoresServices;
-import com.example.Actividad5.Actividad5.services.JugadoresServicesRAM;
+import com.example.Actividad5.Actividad5.services.ram.JugadoresServicesRAM;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

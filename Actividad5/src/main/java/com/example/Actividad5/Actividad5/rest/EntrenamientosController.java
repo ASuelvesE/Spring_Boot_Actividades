@@ -3,12 +3,10 @@ package com.example.Actividad5.Actividad5.rest;
 import com.example.Actividad5.Actividad5.constants.Const;
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
 import com.example.Actividad5.Actividad5.entities.Entrenamiento;
-import com.example.Actividad5.Actividad5.services.EntrenamientosServicesRAM;
+import com.example.Actividad5.Actividad5.entities.Jugador;
+import com.example.Actividad5.Actividad5.services.ram.EntrenamientosServicesRAM;
 import com.example.Actividad5.Actividad5.services.IEntrenamientosServices;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -33,4 +31,13 @@ public class EntrenamientosController {
     Entrenamiento save(Date fecha, List<Ejercicio> ejercicios){
         return services.save(fecha,ejercicios);
     }
+    @PutMapping(Const.API + "/entrenamientos/{id}")
+    Entrenamiento update(@PathVariable Long id, @RequestBody List<Jugador> asistentes){
+        return services.update(id,asistentes);
+    }
+    @DeleteMapping(Const.API + "/entrenamientos/{id}")
+    List<Entrenamiento> delete(@PathVariable Long id){
+        return services.delete(id);
+    }
+
 }

@@ -1,11 +1,10 @@
-package com.example.Actividad5.Actividad5.entities;
+package com.example.Actividad5.Actividad5.entities.enums;
 
-
-public enum Recuperacion {
+public enum Velocidad {
     HIGH(3),MEDIUM(2),LOW(1);
     private  final int numero;
 
-    Recuperacion(int numero){
+    Velocidad(int numero){
         this.numero = numero;
     }
 

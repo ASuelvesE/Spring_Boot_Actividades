@@ -1,10 +1,11 @@
-package com.example.Actividad5.Actividad5.entities;
+package com.example.Actividad5.Actividad5.entities.enums;
 
-public enum Resistencia {
+
+public enum Recuperacion {
     HIGH(3),MEDIUM(2),LOW(1);
     private  final int numero;
 
-    Resistencia(int numero){
+    Recuperacion(int numero){
         this.numero = numero;
     }
 
@@ -12,3 +13,4 @@ public enum Resistencia {
         return numero;
     }
 }
+

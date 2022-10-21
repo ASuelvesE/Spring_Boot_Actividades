@@ -1,5 +1,9 @@
 package com.example.Actividad5.Actividad5.entities;
 
+import com.example.Actividad5.Actividad5.entities.enums.Recuperacion;
+import com.example.Actividad5.Actividad5.entities.enums.Resistencia;
+import com.example.Actividad5.Actividad5.entities.enums.Velocidad;
+
 import java.sql.Date;
 
 public class Jugador {

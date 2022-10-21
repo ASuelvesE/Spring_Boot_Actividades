@@ -1,10 +1,10 @@
-package com.example.Actividad5.Actividad5.entities;
+package com.example.Actividad5.Actividad5.entities.enums;
 
-public enum Velocidad {
+public enum Resistencia {
     HIGH(3),MEDIUM(2),LOW(1);
     private  final int numero;
 
-    Velocidad(int numero){
+    Resistencia(int numero){
         this.numero = numero;
     }
 
@@ -12,4 +12,3 @@ public enum Velocidad {
         return numero;
     }
 }
-

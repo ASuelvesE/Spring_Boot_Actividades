@@ -1,10 +1,13 @@
-package com.example.Actividad5.Actividad5.services;
+package com.example.Actividad5.Actividad5.services.ram;
 
 import com.example.Actividad5.Actividad5.conexion.Ram;
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
 import com.example.Actividad5.Actividad5.entities.Entrenamiento;
+import com.example.Actividad5.Actividad5.entities.Jugador;
+import com.example.Actividad5.Actividad5.services.IEntrenamientosServices;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class EntrenamientosServicesRAM implements IEntrenamientosServices<Entrenamiento> {
@@ -32,12 +35,26 @@ public class EntrenamientosServicesRAM implements IEntrenamientosServices<Entren
     }
 
     @Override
-    public Entrenamiento update(Long id, Entrenamiento e) {
+    public Entrenamiento update(Long id, List<Jugador> asistentes) {
+        for(Entrenamiento e : Ram.getInstance().getEntrenamientos()){
+            if(e.getId() == id){
+                e.setAsistentes(asistentes);
+                return e;
+            }
+        }
         return null;
     }
 
     @Override
     public List<Entrenamiento> delete(Long id) {
+        Iterator it = Ram.getInstance().getEntrenamientos().iterator();
+        while (it.hasNext()){
+            Entrenamiento e = (Entrenamiento) it.next();
+            if(e.getId() == id){
+                it.remove();
+                return Ram.getInstance().getEntrenamientos();
+            }
+        }
         return null;
     }
 }

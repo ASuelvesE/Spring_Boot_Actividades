@@ -21,7 +21,7 @@ public class Entrenamiento {
         contador ++;
     }
 
-    public Entrenamiento(Long id, Date fecha, List<Ejercicio> ejercicios, List<Jugador> asistentes) {
+    public Entrenamiento(Date fecha, List<Ejercicio> ejercicios, List<Jugador> asistentes) {
         this.id = contador;
         this.fecha = fecha;
         this.ejercicios = ejercicios;

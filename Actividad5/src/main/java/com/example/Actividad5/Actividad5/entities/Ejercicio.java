@@ -27,6 +27,17 @@ public class Ejercicio {
         this.recursosMultimedia = new HashMap<>();
         contador++;
     }
+    public Ejercicio(String titulo, String descripcion, String duracion,HashMap<String, Integer> dureza) {
+        this.id = contador;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.etiquetas = new ArrayList<>();
+        this.dureza = dureza;
+        this.materiales = new ArrayList<>();
+        this.recursosMultimedia = new HashMap<>();
+        contador++;
+    }
 
     public Ejercicio(String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String, Integer> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
         this.id = contador;
