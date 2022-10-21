@@ -12,9 +12,10 @@ public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio> {
     public List getAll() {
         List<Ejercicio> lista = new ArrayList<>();
         for(Ejercicio e : Ram.getInstance().getEjercicios()){
-            Ejercicio nuevo = new Ejercicio(e.getTitulo());
+            Ejercicio nuevo = new Ejercicio(e.getTitulo(),null,null,null,null,null,null);
             nuevo.setId(e.getId());
             lista.add(nuevo);
+            Ejercicio.contador--;
         }
         return lista;
     }

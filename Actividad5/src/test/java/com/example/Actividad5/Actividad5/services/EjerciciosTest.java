@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -22,27 +24,27 @@ public class EjerciciosTest {
     public void clean(){
         Ram.getInstance().getEjercicios().clear();
         Ejercicio.reseteaContador();
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest"));
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2"));
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest",null,null,null,null,null,null));
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2",null,null,null,null,null,null));
     }
     @Test
-    public void getAll(){
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest"));
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2"));
+    public void getAll() throws SQLException {
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest",null,null,null,null,null,null));
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2",null,null,null,null,null,null));
         assertEquals(2L,services.getAll().get(1).getId());
     }
     @Test
-    public void getAll2(){
+    public void getAll2() throws SQLException{
         assertEquals(2L,services.getAll().size());
     }
 
     @Test
-    public void getById(){
+    public void getById() throws SQLException{
         assertEquals("EjercicioTest2",services.getById(2L).getTitulo());
     }
     @Test
-    public void save(){
-        assertEquals("EjercicioTest2",services.save(new Ejercicio("EjercicioTest2")).getTitulo());
+    public void save() throws SQLException{
+        assertEquals("EjercicioTest2",services.save(new Ejercicio("EjercicioTest2",null,null,null,null,null,null)).getTitulo());
     }
 
 }

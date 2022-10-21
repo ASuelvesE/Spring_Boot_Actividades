@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -38,35 +39,35 @@ public class EntrenamientosTest {
         dureza2.put(Velocidad.class.getName(),Velocidad.MEDIUM.getNumero());
 
         List<Ejercicio> ejercicios = new ArrayList<>();
-        ejercicios.add(new Ejercicio("EjercicioTest","DescripcionTest","10:00",dureza));
-        ejercicios.add(new Ejercicio("EjercicioTest2","DescripcionTest2","20:00",dureza2));
+        ejercicios.add(new Ejercicio("EjercicioTest","DescripcionTest",null,"10:00",dureza,null,null));
+        ejercicios.add(new Ejercicio("EjercicioTest2","DescripcionTest2",null,"20:00",dureza2,null,null));
 
         List<Jugador> asistentes = new ArrayList<>();
-        asistentes.add(new Jugador("123","nombreTest","apellidosTest"));
-        asistentes.add(new Jugador("456","nombreTest","apellidosTest"));
-        asistentes.add(new Jugador("789","nombreTest2","apellidosTest2"));
+        asistentes.add(new Jugador("123","nombreTest","apellidosTest",null,null,null,null));
+        asistentes.add(new Jugador("456","nombreTest","apellidosTest",null,null,null,null));
+        asistentes.add(new Jugador("789","nombreTest2","apellidosTest2",null,null,null,null));
 
         List<Ejercicio> ejercicios2 = new ArrayList<>();
-        ejercicios2.add(new Ejercicio("EjercicioTest","DescripcionTest","10:00",dureza));
+        ejercicios2.add(new Ejercicio("EjercicioTest","DescripcionTest",null,"10:00",dureza,null,null));
 
         List<Jugador> asistentes2 = new ArrayList<>();
-        asistentes2.add(new Jugador("123","nombreTest","apellidosTest"));
+        asistentes2.add(new Jugador("123","nombreTest","apellidosTest",null,null,null,null));
 
-        Ram.getInstance().getEntrenamientos().add(new Entrenamiento(new Date(),ejercicios,asistentes));
-        Ram.getInstance().getEntrenamientos().add(new Entrenamiento(new Date(),ejercicios2,asistentes2));
+        Ram.getInstance().getEntrenamientos().add(new Entrenamiento(new Date(),ejercicios,asistentes,null));
+        Ram.getInstance().getEntrenamientos().add(new Entrenamiento(new Date(),ejercicios2,asistentes2,null));
     }
     @Test
-    public void getAll(){
+    public void getAll() throws SQLException {
         assertEquals(2,services.getAll().size());
     }
     @Test
-    public void getById(){
-        Entrenamiento e = services.getById(1L);
-        assertEquals(Optional.of(7L),e.getDurezaMedia());
+    public void getById() throws SQLException{
+        assertEquals(new Long(7),(services.getById(1L).getDurezaMedia()));
     }
     @Test
-    public void save(){
-        Entrenamiento e = services.save(new Entrenamiento(new Date()));
+    public void save() throws SQLException{
+        List<Ejercicio> ejercicios = new ArrayList<>();
+        Entrenamiento e = services.save(new Date(),ejercicios);
         assertEquals(3L,Ram.getInstance().getEntrenamientos().size());
     }
 }

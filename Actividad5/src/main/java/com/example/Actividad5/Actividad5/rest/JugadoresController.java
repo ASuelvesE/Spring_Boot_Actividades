@@ -1,11 +1,13 @@
 package com.example.Actividad5.Actividad5.rest;
 
-import com.example.Actividad5.Actividad5.constants.Const;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 import com.example.Actividad5.Actividad5.services.IJugadoresServices;
+import com.example.Actividad5.Actividad5.services.mysql.JugadoresServicesMySQL;
 import com.example.Actividad5.Actividad5.services.ram.JugadoresServicesRAM;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -15,20 +17,22 @@ public class JugadoresController {
     IJugadoresServices<Jugador> services;
 
     public JugadoresController(){
-        services = new JugadoresServicesRAM();
+        services = new JugadoresServicesMySQL();
     }
 
-    @GetMapping(Const.API + "/jugadores/{id}")
-    List<Jugador> getById(@PathVariable Long id){
-        if(id == null)
-            return services.getAll();
+    @GetMapping("/jugadores")
+    List<Jugador> getAll() throws SQLException {
+        return services.getAll();
+    }
+    @GetMapping("/jugadores/{id}")
+    List<Jugador> getById(@PathVariable Long id)  throws SQLException{
         return services.getById(id);
     }
-    @PostMapping(Const.API + "/jugadores")
-    Jugador save(Jugador jugador){
+    @PostMapping(value = "/jugadores",produces = MediaType.APPLICATION_JSON_VALUE)
+    Jugador save(@RequestBody Jugador jugador) throws SQLException {
         return services.save(jugador);
     }
-    @PutMapping(Const.API + "/jugadores/{id}")
+    @PutMapping(value = "/jugadores/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     Jugador update(@PathVariable Long id,@RequestBody Jugador jugador){
         return services.update(id,jugador);
     }

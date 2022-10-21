@@ -8,7 +8,7 @@ import java.sql.Date;
 
 public class Jugador {
 
-    private static Long contador = 1L;
+    public static Long contador = 1L;
     private Long id;
     private String dni;
     private String nombre;
@@ -27,14 +27,6 @@ public class Jugador {
         this.resistencia = resistencia;
         this.velocidad = velocidad;
         this.recuperacion = recuperacion;
-        contador++;
-    }
-
-    public Jugador(String dni, String nombre, String apellidos) {
-        this.id = contador;
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
         contador++;
     }
 

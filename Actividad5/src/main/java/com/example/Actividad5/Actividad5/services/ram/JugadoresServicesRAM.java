@@ -15,7 +15,9 @@ public class JugadoresServicesRAM implements IJugadoresServices<Jugador> {
         List<Jugador> jugadores = Ram.getInstance().getJugadores();
         List<Jugador> lista = new ArrayList<>();
         for(Jugador j : jugadores){
-            Jugador nuevo = new Jugador(j.getDni(),j.getNombre(),j.getApellidos());
+            Jugador nuevo = new Jugador(j.getDni(),j.getNombre(),j.getApellidos(),null,null,null,null);
+            Jugador.contador--;
+            nuevo.setId(j.getId());
             lista.add(nuevo);
         }
         return lista;

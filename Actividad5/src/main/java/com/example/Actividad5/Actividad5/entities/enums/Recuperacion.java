@@ -12,5 +12,11 @@ public enum Recuperacion {
     public int getNumero() {
         return numero;
     }
+    public static String getValor(int numero){
+        if(numero == 3) return "HIGH";
+        if(numero == 2) return "MEDIUM";
+        if(numero == 1) return "LOW";
+        return "DESCONOCIDO";
+    }
 }
 

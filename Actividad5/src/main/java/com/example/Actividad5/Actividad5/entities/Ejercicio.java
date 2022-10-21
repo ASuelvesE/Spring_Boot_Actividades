@@ -6,38 +6,15 @@ import java.util.List;
 
 public class Ejercicio {
 
-    private static Long contador = 1L;
+    public static Long contador = 1L;
     private Long id;
-    private final String titulo;
+    private String titulo;
     private String descripcion;
     private List<String> etiquetas;
     private String duracion;
     private HashMap<String,Integer> dureza;
     private List<String> materiales;
     private HashMap<String,String> recursosMultimedia;
-
-    public Ejercicio(String titulo, String descripcion, String duracion) {
-        this.id = contador;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.duracion = duracion;
-        this.etiquetas = new ArrayList<>();
-        this.dureza = new HashMap<>();
-        this.materiales = new ArrayList<>();
-        this.recursosMultimedia = new HashMap<>();
-        contador++;
-    }
-    public Ejercicio(String titulo, String descripcion, String duracion,HashMap<String, Integer> dureza) {
-        this.id = contador;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.duracion = duracion;
-        this.etiquetas = new ArrayList<>();
-        this.dureza = dureza;
-        this.materiales = new ArrayList<>();
-        this.recursosMultimedia = new HashMap<>();
-        contador++;
-    }
 
     public Ejercicio(String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String, Integer> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
         this.id = contador;
@@ -48,12 +25,6 @@ public class Ejercicio {
         this.dureza = dureza;
         this.materiales = materiales;
         this.recursosMultimedia = recursosMultimedia;
-        contador++;
-    }
-
-    public Ejercicio(String titulo) {
-        this.id = contador;
-        this.titulo = titulo;
         contador++;
     }
 

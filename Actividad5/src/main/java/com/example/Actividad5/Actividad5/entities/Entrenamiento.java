@@ -2,38 +2,24 @@ package com.example.Actividad5.Actividad5.entities;
 
 
 import java.util.*;
+import java.util.Date;
 
 public class Entrenamiento {
-
-    private static Long contador = 1L;
+    public static Long contador = 1L;
     private Long id;
     private Date fecha;
-    private List<Ejercicio> ejercicios;
-    private List<Jugador> asistentes;
-
+    private List<Ejercicio> ejercicios = new ArrayList<>();
+    private List<Jugador> asistentes = new ArrayList<>();
     private Long durezaMedia;
 
-    public Entrenamiento(Date fecha) {
-        this.id = contador;
-        this.fecha = fecha;
-        this.ejercicios = new ArrayList<>();
-        this.asistentes = new ArrayList<>();
-        contador ++;
-    }
 
-    public Entrenamiento(Date fecha, List<Ejercicio> ejercicios, List<Jugador> asistentes) {
+    public Entrenamiento(Date fecha, List<Ejercicio> ejercicios, List<Jugador> asistentes, Long durezaMedia) {
         this.id = contador;
         this.fecha = fecha;
         this.ejercicios = ejercicios;
         this.asistentes = asistentes;
-        contador ++;
-    }
-
-    public Entrenamiento(Date fecha, List<Ejercicio> ejercicios) {
-        this.id = contador;
-        this.fecha = fecha;
-        this.ejercicios = ejercicios;
-        contador ++;
+        this.durezaMedia = durezaMedia;
+        contador++;
     }
 
     public Long getId() {

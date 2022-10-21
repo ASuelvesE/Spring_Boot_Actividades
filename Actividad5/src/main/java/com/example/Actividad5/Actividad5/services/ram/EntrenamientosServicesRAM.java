@@ -6,6 +6,7 @@ import com.example.Actividad5.Actividad5.entities.Entrenamiento;
 import com.example.Actividad5.Actividad5.entities.Jugador;
 import com.example.Actividad5.Actividad5.services.IEntrenamientosServices;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +30,7 @@ public class EntrenamientosServicesRAM implements IEntrenamientosServices<Entren
 
     @Override
     public Entrenamiento save(Date fecha, List<Ejercicio> ejercicios) {
-        Entrenamiento nuevo = new Entrenamiento(fecha,ejercicios);
+        Entrenamiento nuevo = new Entrenamiento(fecha,ejercicios,new ArrayList<>(),null);
         Ram.getInstance().getEntrenamientos().add(nuevo);
         return nuevo;
     }
