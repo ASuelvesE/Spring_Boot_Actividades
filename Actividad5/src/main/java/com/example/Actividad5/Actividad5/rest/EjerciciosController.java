@@ -1,11 +1,13 @@
 package com.example.Actividad5.Actividad5.rest;
 
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
+import com.example.Actividad5.Actividad5.services.mysql.EjerciciosServicesMySQL;
 import com.example.Actividad5.Actividad5.services.ram.EjerciciosServicesRAM;
 import com.example.Actividad5.Actividad5.services.IEjerciciosServices;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -15,19 +17,19 @@ public class EjerciciosController {
     IEjerciciosServices<Ejercicio> services;
 
     EjerciciosController(){
-        this.services = new EjerciciosServicesRAM();
+        this.services = new EjerciciosServicesMySQL();
     }
 
     @GetMapping("/ejercicios")
-    List<Ejercicio> getAll(){
+    List<Ejercicio> getAll() throws SQLException {
         return services.getAll();
     }
     @GetMapping("/ejercicios/{id}")
-    Ejercicio getById(@PathVariable Long id){
+    Ejercicio getById(@PathVariable Long id) throws SQLException {
         return services.getById(id);
     }
     @PostMapping(value = "/ejercicios",produces = MediaType.APPLICATION_JSON_VALUE)
-    Ejercicio save(@RequestBody Ejercicio e){
+    Ejercicio save(@RequestBody Ejercicio e) throws SQLException {
         return services.save(e);
     }
 
