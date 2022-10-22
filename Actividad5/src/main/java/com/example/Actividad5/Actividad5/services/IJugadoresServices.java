@@ -12,5 +12,5 @@ public interface IJugadoresServices<Jugador> {
 
     public Jugador save(Jugador jugador) throws SQLException;
 
-    public Jugador update(Long id,Jugador jugador);
+    public Jugador update(Long id,Jugador jugador) throws SQLException;
 }

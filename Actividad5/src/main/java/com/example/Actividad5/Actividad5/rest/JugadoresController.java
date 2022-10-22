@@ -33,7 +33,7 @@ public class JugadoresController {
         return services.save(jugador);
     }
     @PutMapping(value = "/jugadores/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    Jugador update(@PathVariable Long id,@RequestBody Jugador jugador){
+    Jugador update(@PathVariable Long id,@RequestBody Jugador jugador) throws  SQLException{
         return services.update(id,jugador);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.Actividad5.Actividad5.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.*;
 import java.util.Date;
 
@@ -24,6 +26,10 @@ public class Entrenamiento {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getFecha() {

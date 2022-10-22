@@ -59,7 +59,12 @@ public class JugadoresServicesMySQL implements IJugadoresServices<Jugador> {
     }
 
     @Override
-    public Jugador update(Long id, Jugador jugador) {
-        return null;
+    public Jugador update(Long id, Jugador j) throws SQLException {
+        String query = "UPDATE jugadores SET " +
+                "dni="+"'" + j.getDni()+"',"+"nombre="+"'" + j.getNombre()+"',"+"apellidos="+"'" + j.getApellidos()+"',"+
+                "fechaNacimiento="+"'" + j.getFechaNacimiento()+"',"+"resistencia="+j.getResistencia().getNumero()+","+
+                "velocidad="+j.getVelocidad().getNumero()+","+"recuperacion="+j.getRecuperacion().getNumero()+" WHERE id="+id+";";
+        MySql.getInstance().createStatement().execute(query);
+        return j;
     }
 }
