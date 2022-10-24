@@ -1,6 +1,8 @@
 package com.example.Actividad5.Actividad5.entities;
 
 
+import com.example.Actividad5.Actividad5.entities.enums.Resistencia;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
@@ -61,10 +63,10 @@ public class Entrenamiento implements Serializable {
     public void calculaDurezaMedia(){
         int sumaCondicionesFisicas = 0;
         for(Ejercicio e : this.ejercicios){
-            HashMap<String,Integer> dureza = e.getDureza();
+            HashMap<String,String> dureza = e.getDureza();
             Iterator it = dureza.values().iterator();
             while (it.hasNext()){
-                sumaCondicionesFisicas += (Integer)it.next();
+                sumaCondicionesFisicas += Resistencia.valueOf((String)it.next()).getNumero();
             }
         }
         this.durezaMedia = Long.valueOf(sumaCondicionesFisicas/(this.ejercicios.size() * 3));

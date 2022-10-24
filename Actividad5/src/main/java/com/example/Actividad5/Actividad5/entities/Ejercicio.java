@@ -1,5 +1,7 @@
 package com.example.Actividad5.Actividad5.entities;
 
+import com.example.Actividad5.Actividad5.entities.enums.Recuperacion;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +16,12 @@ public class Ejercicio implements Serializable {
     private String descripcion;
     private List<String> etiquetas;
     private String duracion;
-    private HashMap<String,Integer> dureza;
+    private HashMap<String,String> dureza;
     private Long durezaMedia;
     private List<String> materiales;
     private HashMap<String,String> recursosMultimedia;
 
-    public Ejercicio(String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String, Integer> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
+    public Ejercicio(String titulo, String descripcion, List<String> etiquetas, String duracion, HashMap<String,String> dureza, List<String> materiales, HashMap<String, String> recursosMultimedia) {
         this.id = contador;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -53,7 +55,7 @@ public class Ejercicio implements Serializable {
         return duracion;
     }
 
-    public HashMap<String, Integer> getDureza() {
+    public HashMap<String, String> getDureza() {
         return dureza;
     }
 
@@ -69,7 +71,7 @@ public class Ejercicio implements Serializable {
         this.etiquetas = etiquetas;
     }
 
-    public void setDureza(HashMap<String, Integer> dureza) {
+    public void setDureza(HashMap<String, String> dureza) {
         this.dureza = dureza;
     }
 
@@ -108,10 +110,11 @@ public class Ejercicio implements Serializable {
 
     public void calculaDurezaMedia(){
         int sumaDurezas = 0;
-        if(!dureza.isEmpty()){
-            Iterator it = this.dureza.values().iterator();
+        if(!dureza.isEmpty() && dureza != null){
+            Iterator it = this.dureza.values().stream().iterator();
             while (it.hasNext()){
-                sumaDurezas += (Integer)it.next();
+                String valor = (String) it.next();
+                sumaDurezas += Recuperacion.valueOf(valor).getNumero();
             }
             this.durezaMedia = Long.valueOf(sumaDurezas/this.dureza.size());
         }

@@ -2,6 +2,9 @@ package com.example.Actividad5.Actividad5.services.mysql;
 
 import com.example.Actividad5.Actividad5.conexion.MySql;
 import com.example.Actividad5.Actividad5.entities.Ejercicio;
+import com.example.Actividad5.Actividad5.entities.enums.Recuperacion;
+import com.example.Actividad5.Actividad5.entities.enums.Resistencia;
+import com.example.Actividad5.Actividad5.entities.enums.Velocidad;
 import com.example.Actividad5.Actividad5.services.IEjerciciosServices;
 
 import java.sql.ResultSet;
@@ -25,11 +28,11 @@ public class EjerciciosServicesMySQL implements IEjerciciosServices<Ejercicio> {
     public Ejercicio getById(Long id) throws SQLException {
         Ejercicio e = null;
         ResultSet rs = MySql.getInstance().createStatement().executeQuery("SELECT * FROM ejercicios WHERE id= "+ id+";");
-        HashMap<String,Integer> dureza = new HashMap<>();
+        HashMap<String,String> dureza = new HashMap<>();
         while(rs.next()){
-            dureza.put("resistencia",rs.getInt("resistencia"));
-            dureza.put("velocidad",rs.getInt("velocidad"));
-            dureza.put("recuperacion",rs.getInt("recuperacion"));
+            dureza.put("resistencia", Resistencia.getValor(rs.getInt("resistencia")));
+            dureza.put("velocidad", Velocidad.getValor(rs.getInt("velocidad")));
+            dureza.put("recuperacion", Recuperacion.getValor(rs.getInt("recuperacion")));
             e = new Ejercicio(rs.getString("titulo"),rs.getString("descripcion"),new ArrayList<>(),rs.getString("duracion"),dureza,new ArrayList<>(),new HashMap<String,String>());
             e.setId(rs.getLong("id"));
             e.setDurezaMedia(rs.getLong("dureza"));
@@ -52,9 +55,12 @@ public class EjerciciosServicesMySQL implements IEjerciciosServices<Ejercicio> {
     @Override
     public Ejercicio save(Ejercicio e) throws SQLException {
         e.calculaDurezaMedia();
+        int resistencia = Resistencia.valueOf(e.getDureza().get("resistencia")).getNumero();
+        int velocidad = Velocidad.valueOf(e.getDureza().get("velocidad")).getNumero();
+        int recuperacion = Recuperacion.valueOf(e.getDureza().get("recuperacion")).getNumero();
         String query = "INSERT INTO ejercicios(id,titulo,descripcion,duracion,resistencia,velocidad,recuperacion,dureza) VALUES("+e.getId()+
-                ",'"+e.getTitulo()+"','"+e.getDescripcion()+"','"+e.getDuracion()+"','"+e.getDureza().get("resistencia")+"','"+e.getDureza().get("velocidad")+
-                "','"+e.getDureza().get("recuperacion")+"',"+e.getDurezaMedia()+");";
+                ",'"+e.getTitulo()+"','"+e.getDescripcion()+"','"+e.getDuracion()+"','"+resistencia+"','"+ velocidad+
+                "','"+recuperacion+"',"+e.getDurezaMedia()+");";
         MySql.getInstance().createStatement().execute(query);
         for(String mat : e.getMateriales()){
             query = "INSERT INTO materiales VALUES("+e.getId()+",'"+mat+"');";

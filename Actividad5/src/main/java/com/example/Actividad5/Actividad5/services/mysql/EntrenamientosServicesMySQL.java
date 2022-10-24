@@ -54,10 +54,10 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
         ResultSet ejs = MySql.getInstance().createStatement().executeQuery(query);
         while (ejs.next()){
             Ejercicio ej = new Ejercicio(ejs.getString("titulo"),ejs.getString("descripcion"),new ArrayList<>(),ejs.getString("duracion"),
-                    new HashMap<String,Integer>(),new ArrayList<>(),new HashMap<String,String>());
-            ej.getDureza().put("resistencia",ejs.getInt("resistencia"));
-            ej.getDureza().put("velocidad",ejs.getInt("velocidad"));
-            ej.getDureza().put("recuperacion",ejs.getInt("recuperacion"));
+                    new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>());
+            ej.getDureza().put("resistencia",Resistencia.getValor(ejs.getInt("resistencia")));
+            ej.getDureza().put("velocidad",Velocidad.getValor(ejs.getInt("velocidad")));
+            ej.getDureza().put("recuperacion",Recuperacion.getValor(ejs.getInt("recuperacion")));
             ej.setId(ejs.getLong("id"));
             ej.setDurezaMedia(ejs.getLong("dureza"));
             en.getEjercicios().add(ej);
@@ -93,19 +93,14 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
                 en.getDurezaMedia()+",'"+fechaFormat+"');";
         MySql.getInstance().createStatement().execute(query);
 
-        if(en.getAsistentes() != null){
-            for(Jugador j : en.getAsistentes()){
-                query = "INSERT INTO reservaEntrenamientos (id_jugador,id_entrenamiento) VALUES" +
-                        " ("+j.getId()+","+en.getId()+");";
-                MySql.getInstance().createStatement().execute(query);
-            }
-        }
-
         for(Ejercicio e : en.getEjercicios()){
             e.calculaDurezaMedia();
+            int resistencia = Resistencia.valueOf(e.getDureza().get("resistencia")).getNumero();
+            int velocidad = Velocidad.valueOf(e.getDureza().get("velocidad")).getNumero();
+            int recuperacion = Recuperacion.valueOf(e.getDureza().get("recuperacion")).getNumero();
             query = "INSERT INTO ejercicios VALUES ("+e.getId()+",'"+e.getTitulo()+"','"+
-                    e.getDescripcion()+"','"+e.getDuracion()+"',"+e.getDureza().get("resistencia")+","+e.getDureza().get("velocidad")+
-                    ","+e.getDureza().get("recuperacion")+","+e.getDurezaMedia()+");";
+                    e.getDescripcion()+"','"+e.getDuracion()+"',"+resistencia+","+velocidad+
+                    ","+recuperacion+","+e.getDurezaMedia()+");";
             MySql.getInstance().createStatement().execute(query);
             query = "INSERT INTO entrenamientos_ejercicios VALUES("+e.getId()+","+en.getId()+");";
             MySql.getInstance().createStatement().execute(query);
@@ -143,10 +138,10 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
         ResultSet ejs = MySql.getInstance().createStatement().executeQuery(query);
         while (ejs.next()){
             Ejercicio ej = new Ejercicio(ejs.getString("titulo"),ejs.getString("descripcion"),new ArrayList<>(),ejs.getString("duracion"),
-                    new HashMap<String,Integer>(),new ArrayList<>(),new HashMap<String,String>());
-            ej.getDureza().put(Resistencia.getValor(ejs.getInt("resistencia")),ejs.getInt("resistencia"));
-            ej.getDureza().put(Velocidad.getValor(ejs.getInt("velocidad")),ejs.getInt("velocidad"));
-            ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),ejs.getInt("recuperacion"));
+                    new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>());
+            ej.getDureza().put(Resistencia.getValor(ejs.getInt("resistencia")),Resistencia.getValor(ejs.getInt("resistencia")));
+            ej.getDureza().put(Velocidad.getValor(ejs.getInt("velocidad")),Velocidad.getValor(ejs.getInt("velocidad")));
+            ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),Recuperacion.getValor(ejs.getInt("recuperacion")));
             ej.setId(ejs.getLong("id"));
             ej.setDurezaMedia(ejs.getLong("dureza"));
             resultado.getEjercicios().add(ej);
