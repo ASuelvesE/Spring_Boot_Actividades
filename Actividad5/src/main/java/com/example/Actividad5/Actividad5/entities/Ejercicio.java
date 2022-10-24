@@ -3,6 +3,7 @@ package com.example.Actividad5.Actividad5.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Ejercicio implements Serializable {
@@ -14,6 +15,7 @@ public class Ejercicio implements Serializable {
     private List<String> etiquetas;
     private String duracion;
     private HashMap<String,Integer> dureza;
+    private Long durezaMedia;
     private List<String> materiales;
     private HashMap<String,String> recursosMultimedia;
 
@@ -24,8 +26,10 @@ public class Ejercicio implements Serializable {
         this.etiquetas = etiquetas;
         this.duracion = duracion;
         this.dureza = dureza;
+        this.durezaMedia = 0L;
         this.materiales = materiales;
         this.recursosMultimedia = recursosMultimedia;
+        this.calculaDurezaMedia();
         contador++;
     }
 
@@ -96,5 +100,24 @@ public class Ejercicio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getDurezaMedia() {
+        return durezaMedia;
+    }
+
+    public void calculaDurezaMedia(){
+        int sumaDurezas = 0;
+        if(!dureza.isEmpty()){
+            Iterator it = this.dureza.values().iterator();
+            while (it.hasNext()){
+                sumaDurezas += (Integer)it.next();
+            }
+            this.durezaMedia = Long.valueOf(sumaDurezas/this.dureza.size());
+        }
+    }
+
+    public void setDurezaMedia(long dureza) {
+        this.durezaMedia = dureza;
     }
 }

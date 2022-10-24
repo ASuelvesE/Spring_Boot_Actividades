@@ -24,23 +24,48 @@ public class EntrenamientosController {
     }
     @GetMapping("/entrenamientos")
     List<Entrenamiento> getAll() throws SQLException {
-        return services.getAll();
+        try{
+            return services.getAll();
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @GetMapping("/entrenamientos/{id}")
     Entrenamiento getById(@PathVariable Long id) throws SQLException {
-        return services.getById(id);
+        try{
+            return services.getById(id);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @PostMapping(value = "/entrenamientos",produces = MediaType.APPLICATION_JSON_VALUE)
     Entrenamiento save(@RequestBody Entrenamiento entrenamiento) throws SQLException {
-        return services.save(entrenamiento);
+        try{
+            return services.save(entrenamiento);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @PutMapping(value = "/entrenamientos/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     Entrenamiento update(@PathVariable Long id, @RequestBody List<Jugador> asistentes) throws SQLException {
-        return services.update(id,asistentes);
+        try{
+            return services.update(id,asistentes);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @DeleteMapping("/entrenamientos/{id}")
     List<Entrenamiento> delete(@PathVariable Long id) throws SQLException {
-        return services.delete(id);
+        try{
+            return services.delete(id);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
 }

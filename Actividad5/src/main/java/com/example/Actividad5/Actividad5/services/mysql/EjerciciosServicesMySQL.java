@@ -14,7 +14,7 @@ public class EjerciciosServicesMySQL implements IEjerciciosServices<Ejercicio> {
         List<Ejercicio> lista = new ArrayList<>();
         ResultSet rs = MySql.getInstance().createStatement().executeQuery("SELECT id,titulo FROM ejercicios;");
         while(rs.next()){
-            Ejercicio e = new Ejercicio(rs.getString("titulo"),null,null,null,null,null,null);
+            Ejercicio e = new Ejercicio(rs.getString("titulo"),null,new ArrayList<>(),null,new HashMap<>(),new ArrayList<>(),new HashMap<>());
             e.setId(rs.getLong("id"));
             lista.add(e);
         }
@@ -32,6 +32,7 @@ public class EjerciciosServicesMySQL implements IEjerciciosServices<Ejercicio> {
             dureza.put("recuperacion",rs.getInt("recuperacion"));
             e = new Ejercicio(rs.getString("titulo"),rs.getString("descripcion"),new ArrayList<>(),rs.getString("duracion"),dureza,new ArrayList<>(),new HashMap<String,String>());
             e.setId(rs.getLong("id"));
+            e.setDurezaMedia(rs.getLong("dureza"));
         }
         ResultSet et = MySql.getInstance().createStatement().executeQuery("SELECT descripcion FROM etiquetas WHERE id_ejercicio= "+id+";");
         while (et.next()){
@@ -50,9 +51,10 @@ public class EjerciciosServicesMySQL implements IEjerciciosServices<Ejercicio> {
 
     @Override
     public Ejercicio save(Ejercicio e) throws SQLException {
-        String query = "INSERT INTO ejercicios(id,titulo,descripcion,duracion,resistencia,velocidad,recuperacion) VALUES("+e.getId()+
+        e.calculaDurezaMedia();
+        String query = "INSERT INTO ejercicios(id,titulo,descripcion,duracion,resistencia,velocidad,recuperacion,dureza) VALUES("+e.getId()+
                 ",'"+e.getTitulo()+"','"+e.getDescripcion()+"','"+e.getDuracion()+"','"+e.getDureza().get("resistencia")+"','"+e.getDureza().get("velocidad")+
-                "','"+e.getDureza().get("recuperacion")+"');";
+                "','"+e.getDureza().get("recuperacion")+"',"+e.getDurezaMedia()+");";
         MySql.getInstance().createStatement().execute(query);
         for(String mat : e.getMateriales()){
             query = "INSERT INTO materiales VALUES("+e.getId()+",'"+mat+"');";

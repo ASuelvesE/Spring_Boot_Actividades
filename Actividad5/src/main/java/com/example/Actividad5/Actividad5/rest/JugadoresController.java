@@ -22,18 +22,38 @@ public class JugadoresController {
 
     @GetMapping("/jugadores")
     List<Jugador> getAll() throws SQLException {
-        return services.getAll();
+        try{
+            return services.getAll();
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @GetMapping("/jugadores/{id}")
     List<Jugador> getById(@PathVariable Long id)  throws SQLException{
-        return services.getById(id);
+        try{
+            return services.getById(id);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @PostMapping(value = "/jugadores",produces = MediaType.APPLICATION_JSON_VALUE)
     Jugador save(@RequestBody Jugador jugador) throws SQLException {
-        return services.save(jugador);
+        try{
+            return services.save(jugador);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
     @PutMapping(value = "/jugadores/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     Jugador update(@PathVariable Long id,@RequestBody Jugador jugador) throws  SQLException{
-        return services.update(id,jugador);
+        try{
+            return services.update(id,jugador);
+        }catch (RuntimeException e){
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class MySql {
                 conexion = DriverManager.getConnection(url,"admin","SaltoRoldan");
                 return conexion;
             }catch (SQLException e){
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
         return conexion;

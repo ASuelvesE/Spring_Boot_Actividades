@@ -37,7 +37,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
         Entrenamiento en = null;
         ResultSet rs = MySql.getInstance().createStatement().executeQuery("SELECT * FROM entrenamientos WHERE id="+id+";");
         while(rs.next()){
-            en = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),0L);
+            en = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),rs.getLong("durezaMedia"));
             en.setId(rs.getLong("id"));
         }
         String query = "SELECT * FROM jugadores WHERE id in ("+
@@ -55,12 +55,12 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
         while (ejs.next()){
             Ejercicio ej = new Ejercicio(ejs.getString("titulo"),ejs.getString("descripcion"),new ArrayList<>(),ejs.getString("duracion"),
                     new HashMap<String,Integer>(),new ArrayList<>(),new HashMap<String,String>());
-            ej.getDureza().put(Resistencia.getValor(ejs.getInt("resistencia")),ejs.getInt("resistencia"));
-            ej.getDureza().put(Velocidad.getValor(ejs.getInt("velocidad")),ejs.getInt("velocidad"));
-            ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),ejs.getInt("recuperacion"));
+            ej.getDureza().put("resistencia",ejs.getInt("resistencia"));
+            ej.getDureza().put("velocidad",ejs.getInt("velocidad"));
+            ej.getDureza().put("recuperacion",ejs.getInt("recuperacion"));
             ej.setId(ejs.getLong("id"));
+            ej.setDurezaMedia(ejs.getLong("dureza"));
             en.getEjercicios().add(ej);
-            en.calculaDurezaMedia();
         }
         if(en != null){
             for(Ejercicio ej : en.getEjercicios()){
@@ -83,33 +83,33 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
 
     @Override
     public Entrenamiento save(Entrenamiento en) throws SQLException {
-        Entrenamiento nuevo = new Entrenamiento(en.getFecha(),en.getEjercicios(),null,null);
-        nuevo.setId(en.getId());
-        nuevo.calculaDurezaMedia();
+        en.calculaDurezaMedia();
 
         String pattern = "yyyy-MM-dd' 'HH:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String fechaFormat = simpleDateFormat.format(en.getFecha());
 
         String query = "INSERT INTO entrenamientos (durezaMedia,fecha) VALUES ("+
-                nuevo.getDurezaMedia()+",'"+fechaFormat+"');";
+                en.getDurezaMedia()+",'"+fechaFormat+"');";
         MySql.getInstance().createStatement().execute(query);
 
         if(en.getAsistentes() != null){
             for(Jugador j : en.getAsistentes()){
                 query = "INSERT INTO reservaEntrenamientos (id_jugador,id_entrenamiento) VALUES" +
-                        " ("+j.getId()+","+nuevo.getId()+");";
+                        " ("+j.getId()+","+en.getId()+");";
                 MySql.getInstance().createStatement().execute(query);
             }
         }
 
         for(Ejercicio e : en.getEjercicios()){
+            e.calculaDurezaMedia();
             query = "INSERT INTO ejercicios VALUES ("+e.getId()+",'"+e.getTitulo()+"','"+
                     e.getDescripcion()+"','"+e.getDuracion()+"',"+e.getDureza().get("resistencia")+","+e.getDureza().get("velocidad")+
-                    ","+e.getDureza().get("recuperacion")+");";
+                    ","+e.getDureza().get("recuperacion")+","+e.getDurezaMedia()+");";
+            MySql.getInstance().createStatement().execute(query);
+            query = "INSERT INTO entrenamientos_ejercicios VALUES("+e.getId()+","+en.getId()+");";
             MySql.getInstance().createStatement().execute(query);
         }
-        en.calculaDurezaMedia();
         return en;
     }
 

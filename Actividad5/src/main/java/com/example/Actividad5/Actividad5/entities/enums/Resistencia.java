@@ -17,4 +17,5 @@ public enum Resistencia {
         if(numero == 1) return "LOW";
         return "DESCONOCIDO";
     }
+
 }
