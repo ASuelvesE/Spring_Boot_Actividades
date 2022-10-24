@@ -83,7 +83,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
 
     @Override
     public Entrenamiento save(Entrenamiento en) throws SQLException {
-        Entrenamiento nuevo = new Entrenamiento(en.getFecha(),en.getEjercicios(),new ArrayList<>(),null);
+        Entrenamiento nuevo = new Entrenamiento(en.getFecha(),en.getEjercicios(),null,null);
         nuevo.setId(en.getId());
         nuevo.calculaDurezaMedia();
 
@@ -95,10 +95,12 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
                 nuevo.getDurezaMedia()+",'"+fechaFormat+"');";
         MySql.getInstance().createStatement().execute(query);
 
-        for(Jugador j : en.getAsistentes()){
-            query = "INSERT INTO reservaEntrenamientos (id_jugador,id_entrenamiento) VALUES" +
-                    " ("+j.getId()+","+nuevo.getId()+");";
-            MySql.getInstance().createStatement().execute(query);
+        if(en.getAsistentes() != null){
+            for(Jugador j : en.getAsistentes()){
+                query = "INSERT INTO reservaEntrenamientos (id_jugador,id_entrenamiento) VALUES" +
+                        " ("+j.getId()+","+nuevo.getId()+");";
+                MySql.getInstance().createStatement().execute(query);
+            }
         }
 
         for(Ejercicio e : en.getEjercicios()){
@@ -107,6 +109,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
                     ","+e.getDureza().get("recuperacion")+");";
             MySql.getInstance().createStatement().execute(query);
         }
+        en.calculaDurezaMedia();
         return en;
     }
 
