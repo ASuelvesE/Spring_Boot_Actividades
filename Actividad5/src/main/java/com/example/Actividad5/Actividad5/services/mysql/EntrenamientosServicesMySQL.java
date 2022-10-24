@@ -84,6 +84,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
     @Override
     public Entrenamiento save(Entrenamiento en) throws SQLException {
         Entrenamiento nuevo = new Entrenamiento(en.getFecha(),en.getEjercicios(),new ArrayList<>(),null);
+        nuevo.setId(en.getId());
         nuevo.calculaDurezaMedia();
 
         String pattern = "yyyy-MM-dd' 'HH:mm:ss";
@@ -130,6 +131,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             Jugador j = new Jugador(js.getString("dni"),js.getString("nombre"),js.getString("apellidos"),js.getDate("fechaNacimiento"),
                     Resistencia.valueOf(Resistencia.getValor(js.getInt("resistencia"))),Velocidad.valueOf(Velocidad.getValor(js.getInt("velocidad"))),
                     Recuperacion.valueOf(Recuperacion.getValor(js.getInt("recuperacion"))));
+            j.setId(js.getLong("id"));
             resultado.getAsistentes().add(j);
         }
         query = "SELECT * FROM ejercicios WHERE id in (SELECT id_ejercicio FROM entrenamientos_ejercicios " +
