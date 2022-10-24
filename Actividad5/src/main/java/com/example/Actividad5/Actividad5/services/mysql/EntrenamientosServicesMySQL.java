@@ -124,8 +124,9 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
         Entrenamiento resultado = null;
         ResultSet rs = MySql.getInstance().createStatement().executeQuery("SELECT * FROM entrenamientos WHERE id="+id+";");
         while(rs.next()){
-            resultado = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),null);
+            resultado = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),rs.getLong("durezaMedia"));
             resultado.setId(rs.getLong("id"));
+            resultado.setDurezaMedia(rs.getLong("durezaMedia"));
         }
         String query = "SELECT * FROM jugadores WHERE id in ("+
                 "SELECT id_jugador FROM reservaEntrenamientos WHERE id_entrenamiento ="+id+");";
@@ -147,8 +148,8 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             ej.getDureza().put(Velocidad.getValor(ejs.getInt("velocidad")),ejs.getInt("velocidad"));
             ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),ejs.getInt("recuperacion"));
             ej.setId(ejs.getLong("id"));
+            ej.setDurezaMedia(ejs.getLong("dureza"));
             resultado.getEjercicios().add(ej);
-            resultado.calculaDurezaMedia();
         }
         return resultado;
     }

@@ -65,7 +65,6 @@ public class Entrenamiento implements Serializable {
             Iterator it = dureza.values().iterator();
             while (it.hasNext()){
                 sumaCondicionesFisicas += (Integer)it.next();
-
             }
         }
         this.durezaMedia = Long.valueOf(sumaCondicionesFisicas/(this.ejercicios.size() * 3));
