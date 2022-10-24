@@ -9,10 +9,13 @@ import com.example.Actividad5.Actividad5.entities.enums.Resistencia;
 import com.example.Actividad5.Actividad5.entities.enums.Velocidad;
 import com.example.Actividad5.Actividad5.services.IEntrenamientosServices;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -79,34 +82,46 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
     }
 
     @Override
-    public Entrenamiento save(Date fecha, List<Ejercicio> ejercicios) throws SQLException {
-        Entrenamiento nuevo = new Entrenamiento(fecha,ejercicios,new ArrayList<>(),null);
+    public Entrenamiento save(Entrenamiento en) throws SQLException {
+        Entrenamiento nuevo = new Entrenamiento(en.getFecha(),en.getEjercicios(),new ArrayList<>(),null);
         nuevo.calculaDurezaMedia();
-        MySql.getInstance().createStatement().execute("INSERT INTO entrenamientos (id,durezaMedia) VALUES ("+
-                nuevo.getId()+","+nuevo.getDurezaMedia()+");");
-        MySql.getInstance().createStatement().execute("INSERT INTO reservaEntrenamientos (fecha,id_entrenamiento) VALUES" +
-                " ('"+fecha+"',"+nuevo.getId());
-        for(Ejercicio e : ejercicios){
-            String query = "INSERT INTO ejercicios VALUES ("+e.getId()+",'"+e.getTitulo()+"','"+
+
+        String pattern = "yyyy-MM-dd' 'HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String fechaFormat = simpleDateFormat.format(en.getFecha());
+
+        String query = "INSERT INTO entrenamientos (durezaMedia,fecha) VALUES ("+
+                nuevo.getDurezaMedia()+",'"+fechaFormat+"');";
+        MySql.getInstance().createStatement().execute(query);
+
+        for(Jugador j : en.getAsistentes()){
+            query = "INSERT INTO reservaEntrenamientos (id_jugador,id_entrenamiento) VALUES" +
+                    " ("+j.getId()+","+nuevo.getId()+");";
+            MySql.getInstance().createStatement().execute(query);
+        }
+
+        for(Ejercicio e : en.getEjercicios()){
+            query = "INSERT INTO ejercicios VALUES ("+e.getId()+",'"+e.getTitulo()+"','"+
                     e.getDescripcion()+"','"+e.getDuracion()+"',"+e.getDureza().get("resistencia")+","+e.getDureza().get("velocidad")+
                     ","+e.getDureza().get("recuperacion")+");";
             MySql.getInstance().createStatement().execute(query);
         }
-        return null;
+        return en;
     }
 
     @Override
-    public Entrenamiento update(Long id, List<Jugador> asistentes) throws SQLException {
+    public Entrenamiento update(Long id, List<Jugador> asistentes) throws SQLException { //TODO
         MySql.getInstance().createStatement().execute("DELETE FROM reservaEntrenamientos WHERE id_entrenamiento= "+id+";");
         for(Jugador j : asistentes){
             String query = "INSERT INTO reservaEntrenamientos VALUES ("+j.getId()+","+id+");";
             MySql.getInstance().createStatement().execute(query);
         }
-        Entrenamiento e = null;
+        /////////////////////////////////// AQUI DEBAJO RECOGEMOS LO QUE DEVUELVE ///////////////////////////////////////////////////////////
+        Entrenamiento resultado = null;
         ResultSet rs = MySql.getInstance().createStatement().executeQuery("SELECT * FROM entrenamientos WHERE id="+id+";");
         while(rs.next()){
-            e = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),null);
-            e.setId(rs.getLong("id"));
+            resultado = new Entrenamiento(rs.getDate("fecha"),new ArrayList<>(),new ArrayList<>(),null);
+            resultado.setId(rs.getLong("id"));
         }
         String query = "SELECT * FROM jugadores WHERE id in ("+
                 "SELECT id_jugador FROM reservaEntrenamientos WHERE id_entrenamiento ="+id+");";
@@ -115,7 +130,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             Jugador j = new Jugador(js.getString("dni"),js.getString("nombre"),js.getString("apellidos"),js.getDate("fechaNacimiento"),
                     Resistencia.valueOf(Resistencia.getValor(js.getInt("resistencia"))),Velocidad.valueOf(Velocidad.getValor(js.getInt("velocidad"))),
                     Recuperacion.valueOf(Recuperacion.getValor(js.getInt("recuperacion"))));
-            e.getAsistentes().add(j);
+            resultado.getAsistentes().add(j);
         }
         query = "SELECT * FROM ejercicios WHERE id in (SELECT id_ejercicio FROM entrenamientos_ejercicios " +
                 "WHERE id_entrenamiento ="+id+");";
@@ -127,11 +142,10 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             ej.getDureza().put(Velocidad.getValor(ejs.getInt("velocidad")),ejs.getInt("velocidad"));
             ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),ejs.getInt("recuperacion"));
             ej.setId(ejs.getLong("id"));
-            e.getEjercicios().add(ej);
-            e.calculaDurezaMedia();
+            resultado.getEjercicios().add(ej);
+            resultado.calculaDurezaMedia();
         }
-
-        return e;
+        return resultado;
     }
 
     @Override

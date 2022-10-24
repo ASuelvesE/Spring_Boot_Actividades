@@ -1,12 +1,15 @@
 package com.example.Actividad5.Actividad5.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-public class Entrenamiento {
+
+public class Entrenamiento implements Serializable {
     public static Long contador = 1L;
     private Long id;
     private Date fecha;

@@ -4,9 +4,10 @@ import com.example.Actividad5.Actividad5.entities.enums.Recuperacion;
 import com.example.Actividad5.Actividad5.entities.enums.Resistencia;
 import com.example.Actividad5.Actividad5.entities.enums.Velocidad;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Jugador {
+public class Jugador implements Serializable {
 
     public static Long contador = 1L;
     private Long id;

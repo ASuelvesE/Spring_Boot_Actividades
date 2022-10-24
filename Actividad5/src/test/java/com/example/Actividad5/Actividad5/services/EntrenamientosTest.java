@@ -67,7 +67,8 @@ public class EntrenamientosTest {
     @Test
     public void save() throws SQLException{
         List<Ejercicio> ejercicios = new ArrayList<>();
-        Entrenamiento e = services.save(new Date(),ejercicios);
+        Entrenamiento nuevo = new Entrenamiento(new Date(),ejercicios,new ArrayList<>(),null);
+        Entrenamiento e = services.save(nuevo);
         assertEquals(3L,Ram.getInstance().getEntrenamientos().size());
     }
 }

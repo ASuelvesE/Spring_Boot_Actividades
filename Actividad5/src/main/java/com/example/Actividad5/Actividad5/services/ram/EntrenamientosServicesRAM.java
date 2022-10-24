@@ -29,8 +29,8 @@ public class EntrenamientosServicesRAM implements IEntrenamientosServices<Entren
     }
 
     @Override
-    public Entrenamiento save(Date fecha, List<Ejercicio> ejercicios) {
-        Entrenamiento nuevo = new Entrenamiento(fecha,ejercicios,new ArrayList<>(),null);
+    public Entrenamiento save(Entrenamiento e) {
+        Entrenamiento nuevo = new Entrenamiento(e.getFecha(),e.getEjercicios(),new ArrayList<>(),null);
         Ram.getInstance().getEntrenamientos().add(nuevo);
         return nuevo;
     }

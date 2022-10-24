@@ -31,8 +31,8 @@ public class EntrenamientosController {
         return services.getById(id);
     }
     @PostMapping(value = "/entrenamientos",produces = MediaType.APPLICATION_JSON_VALUE)
-    Entrenamiento save(@RequestBody Date fecha, List<Ejercicio> ejercicios) throws SQLException {
-        return services.save(fecha,ejercicios);
+    Entrenamiento save(@RequestBody Entrenamiento entrenamiento) throws SQLException {
+        return services.save(entrenamiento);
     }
     @PutMapping(value = "/entrenamientos/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     Entrenamiento update(@PathVariable Long id, @RequestBody List<Jugador> asistentes) throws SQLException {
