@@ -47,6 +47,7 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             Jugador j = new Jugador(js.getString("dni"),js.getString("nombre"),js.getString("apellidos"),js.getDate("fechaNacimiento"),
                     Resistencia.valueOf(Resistencia.getValor(js.getInt("resistencia"))),Velocidad.valueOf(Velocidad.getValor(js.getInt("velocidad"))),
                     Recuperacion.valueOf(Recuperacion.getValor(js.getInt("recuperacion"))));
+            j.setId(js.getLong("id"));
             en.getAsistentes().add(j);
         }
         query = "SELECT * FROM ejercicios WHERE id in (SELECT id_ejercicio FROM entrenamientos_ejercicios " +
@@ -104,6 +105,21 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             MySql.getInstance().createStatement().execute(query);
             query = "INSERT INTO entrenamientos_ejercicios VALUES("+e.getId()+","+en.getId()+");";
             MySql.getInstance().createStatement().execute(query);
+            for(String mat : e.getMateriales()){
+                query = "INSERT INTO materiales VALUES("+e.getId()+",'"+mat+"');";
+                MySql.getInstance().createStatement().execute(query);
+            }
+            for(String et : e.getEtiquetas()){
+                query = "INSERT INTO etiquetas VALUES("+e.getId()+",'"+et+"');";
+                MySql.getInstance().createStatement().execute(query);
+            }
+            for(String key : e.getRecursosMultimedia().keySet()){
+                String clave = key;
+                String valor = e.getRecursosMultimedia().get(clave);
+                query = "INSERT INTO recursosMultimedia VALUES("+e.getId()+",'"+clave+"','"+valor+"');";
+                MySql.getInstance().createStatement().execute(query);
+            }
+
         }
         return en;
     }
@@ -144,10 +160,24 @@ public class EntrenamientosServicesMySQL implements IEntrenamientosServices<Entr
             ej.getDureza().put(Recuperacion.getValor(ejs.getInt("recuperacion")),Recuperacion.getValor(ejs.getInt("recuperacion")));
             ej.setId(ejs.getLong("id"));
             ej.setDurezaMedia(ejs.getLong("dureza"));
+
+            ResultSet et = MySql.getInstance().createStatement().executeQuery("SELECT descripcion FROM etiquetas WHERE id_ejercicio= "+id+";");
+            while (et.next()){
+                ej.getEtiquetas().add(et.getString("descripcion"));
+            }
+            ResultSet mat = MySql.getInstance().createStatement().executeQuery("SELECT descripcion FROM materiales WHERE id_ejercicio= "+id+";");
+            while (mat.next()){
+                ej.getMateriales().add(mat.getString("descripcion"));
+            }
+            ResultSet req = MySql.getInstance().createStatement().executeQuery("SELECT * FROM recursosMultimedia WHERE id_ejercicio= "+id+";");
+            while (req.next()){
+                ej.getRecursosMultimedia().put(req.getString("clave"), req.getString("valor"));
+            }
             resultado.getEjercicios().add(ej);
         }
         return resultado;
     }
+
 
     @Override
     public List<Entrenamiento> delete(Long id) throws SQLException {
