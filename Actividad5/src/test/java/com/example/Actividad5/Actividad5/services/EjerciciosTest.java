@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,13 +26,11 @@ public class EjerciciosTest {
     public void clean(){
         Ram.getInstance().getEjercicios().clear();
         Ejercicio.reseteaContador();
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest",null,null,null,null,null,null));
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2",null,null,null,null,null,null));
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest",null,new ArrayList<>(),null,new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>()));
+        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2",null,new ArrayList<>(),null,new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>()));
     }
     @Test
     public void getAll() throws SQLException {
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest",null,null,null,null,null,null));
-        Ram.getInstance().getEjercicios().add(new Ejercicio("EjercicioTest2",null,null,null,null,null,null));
         assertEquals(2L,services.getAll().get(1).getId());
     }
     @Test
@@ -44,7 +44,7 @@ public class EjerciciosTest {
     }
     @Test
     public void save() throws SQLException{
-        assertEquals("EjercicioTest2",services.save(new Ejercicio("EjercicioTest2",null,null,null,null,null,null)).getTitulo());
+        assertEquals("EjercicioTest2",services.save(new Ejercicio("EjercicioTest2",null,new ArrayList<>(),null,new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>())).getTitulo());
     }
 
 }

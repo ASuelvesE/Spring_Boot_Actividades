@@ -5,6 +5,7 @@ import com.example.Actividad5.Actividad5.entities.Ejercicio;
 import com.example.Actividad5.Actividad5.services.IEjerciciosServices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio> {
@@ -12,7 +13,7 @@ public class EjerciciosServicesRAM implements IEjerciciosServices<Ejercicio> {
     public List getAll() {
         List<Ejercicio> lista = new ArrayList<>();
         for(Ejercicio e : Ram.getInstance().getEjercicios()){
-            Ejercicio nuevo = new Ejercicio(e.getTitulo(),null,null,null,null,null,null);
+            Ejercicio nuevo = new Ejercicio(e.getTitulo(),null,new ArrayList<>(),null,new HashMap<String,String>(),new ArrayList<>(),new HashMap<String,String>());
             nuevo.setId(e.getId());
             lista.add(nuevo);
             Ejercicio.contador--;

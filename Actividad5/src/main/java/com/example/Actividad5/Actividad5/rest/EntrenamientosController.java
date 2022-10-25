@@ -41,31 +41,16 @@ public class EntrenamientosController {
         }
     }
     @PostMapping(value = "/entrenamientos",produces = MediaType.APPLICATION_JSON_VALUE)
-    Entrenamiento save(@RequestBody Entrenamiento entrenamiento) throws SQLException {
-        try{
+    Entrenamiento save(@RequestBody Entrenamiento entrenamiento) {
             return services.save(entrenamiento);
-        }catch (RuntimeException e){
-            System.err.println(e.getMessage());
-            return null;
-        }
     }
     @PutMapping(value = "/entrenamientos/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    Entrenamiento update(@PathVariable Long id, @RequestBody List<Jugador> asistentes) throws SQLException {
-        try{
+    Entrenamiento update(@PathVariable Long id, @RequestBody List<Jugador> asistentes) {
             return services.update(id,asistentes);
-        }catch (RuntimeException e){
-            System.err.println(e.getMessage());
-            return null;
-        }
     }
     @DeleteMapping("/entrenamientos/{id}")
-    List<Entrenamiento> delete(@PathVariable Long id) throws SQLException {
-        try{
+    List<Entrenamiento> delete(@PathVariable Long id) {
             return services.delete(id);
-        }catch (RuntimeException e){
-            System.err.println(e.getMessage());
-            return null;
-        }
     }
 
 }

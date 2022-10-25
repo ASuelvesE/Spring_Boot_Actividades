@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface IJugadoresServices<Jugador> {
 
-    public List<Jugador> getAll() throws SQLException;
-    public List<Jugador> getById(Long id) throws SQLException;
+    public List<Jugador> getAll();
+    public List<Jugador> getById(Long id);
 
-    public Jugador save(Jugador jugador) throws SQLException;
+    public Jugador save(Jugador jugador);
 
-    public Jugador update(Long id,Jugador jugador) throws SQLException;
+    public Jugador update(Long id,Jugador jugador);
 }

@@ -28,15 +28,15 @@ public class EntrenamientosTest {
     public void clean(){
         Ram.getInstance().getEntrenamientos().clear();
         Entrenamiento.reseteaContador();
-        HashMap<String, Integer> dureza = new HashMap<>();
-        dureza.put(Recuperacion.class.getName(),Recuperacion.HIGH.getNumero());
-        dureza.put(Resistencia.class.getName(),Resistencia.MEDIUM.getNumero());
-        dureza.put(Velocidad.class.getName(),Velocidad.LOW.getNumero());
+        HashMap<String, String> dureza = new HashMap<>();
+        dureza.put(Recuperacion.class.getName(),Recuperacion.getValor(Recuperacion.HIGH.getNumero()));
+        dureza.put(Resistencia.class.getName(),Resistencia.getValor(Resistencia.MEDIUM.getNumero()));
+        dureza.put(Velocidad.class.getName(),Velocidad.getValor(Velocidad.LOW.getNumero()));
 
-        HashMap<String, Integer> dureza2 = new HashMap<>();
-        dureza2.put(Recuperacion.class.getName(),Recuperacion.HIGH.getNumero());
-        dureza2.put(Resistencia.class.getName(),Resistencia.HIGH.getNumero());
-        dureza2.put(Velocidad.class.getName(),Velocidad.MEDIUM.getNumero());
+        HashMap<String, String> dureza2 = new HashMap<>();
+        dureza2.put(Recuperacion.class.getName(),Recuperacion.getValor(Recuperacion.HIGH.getNumero()));
+        dureza2.put(Resistencia.class.getName(),Resistencia.getValor(Resistencia.MEDIUM.getNumero()));
+        dureza2.put(Velocidad.class.getName(),Velocidad.getValor(Velocidad.LOW.getNumero()));
 
         List<Ejercicio> ejercicios = new ArrayList<>();
         ejercicios.add(new Ejercicio("EjercicioTest","DescripcionTest",null,"10:00",dureza,null,null));
@@ -62,7 +62,7 @@ public class EntrenamientosTest {
     }
     @Test
     public void getById() throws SQLException{
-        assertEquals(new Long(7),(services.getById(1L).getDurezaMedia()));
+        assertEquals(new Long(2),(services.getById(1L).getDurezaMedia()));
     }
     @Test
     public void save() throws SQLException{

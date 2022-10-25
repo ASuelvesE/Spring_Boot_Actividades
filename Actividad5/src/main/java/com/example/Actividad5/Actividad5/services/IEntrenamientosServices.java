@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface IEntrenamientosServices<Entrenamiento> {
 
-    public List<Entrenamiento> getAll() throws SQLException;
-    public Entrenamiento getById(Long id) throws SQLException;
-    public Entrenamiento save(Entrenamiento e) throws SQLException;
-    public Entrenamiento update(Long id,List<Jugador> asistentes) throws SQLException;
-    public List<Entrenamiento> delete(Long id) throws SQLException;
+    public List<Entrenamiento> getAll();
+    public Entrenamiento getById(Long id);
+    public Entrenamiento save(Entrenamiento e);
+    public Entrenamiento update(Long id,List<Jugador> asistentes);
+    public List<Entrenamiento> delete(Long id);
 }

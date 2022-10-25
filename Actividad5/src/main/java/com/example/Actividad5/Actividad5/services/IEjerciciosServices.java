@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IEjerciciosServices <Ejercicio> {
 
-    public List<Ejercicio> getAll() throws SQLException;
-    public Ejercicio getById(Long id) throws SQLException;
-    public Ejercicio save(Ejercicio ejercicio) throws SQLException;
+    public List<Ejercicio> getAll();
+    public Ejercicio getById(Long id);
+    public Ejercicio save(Ejercicio ejercicio);
 }
