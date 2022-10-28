@@ -31,6 +31,7 @@ public class Jugador implements Serializable {
         contador++;
     }
 
+
     public Long getId() {
         return id;
     }

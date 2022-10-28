@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class EjerciciosController {
 
